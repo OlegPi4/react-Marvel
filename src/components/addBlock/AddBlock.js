@@ -38,29 +38,27 @@ class AddBlock extends Component {
         } else {
             this.setState({
                 loadedBlock: !this.state.loadedBlock,
-                loading: true
+                loading: true,
+                error: false
             })
         }
     }
     onError = () => {
         this.setState({
             loading: false,
-            error: true
+            error: true,
+            loadedBlock: !this.state.loadedBlock
         })
     }
     
     renderItems(arr) {
         const items = arr.map((item) => {
-            let imgStyle = { 'objectFit': 'cover' };
-            if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
-                imgStyle = { 'objectFit': 'unset' };
-            }
             return (
                 <div
                     className="block__item"
                     key={item.id}>
-                    <img src={item.thumbnail} alt={item.name} style={imgStyle} />
-                    <div className="block__name">{item.name}</div>
+                    <img src={item.thumbnail} alt={item.name}/>
+                    <div className="block__name addblock__name">{item.name}</div>
                 </div>
             )
         });
@@ -76,7 +74,7 @@ class AddBlock extends Component {
         const items = this.renderItems(char5List);
 
         const errorMessage = error ? <ErrorMessage /> : null;
-        const spinner = !loading ? <Spinner /> : null;
+        const spinner = !loading && !error ? <Spinner /> : null;
         const content = loadedBlock && loading && !error ? items : null;
         
         let buttonBlock = 'Add block';

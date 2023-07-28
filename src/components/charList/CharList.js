@@ -4,15 +4,13 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelServices';
 
 import './charList.scss';
-
-//import abyss from '../../resources/img/abyss.jpg';
-import { render } from '@testing-library/react';
+//import { render } from '@testing-library/react';
 
 
 class CharList extends Component {
     state = {
         charList: [],
-        loading: true,
+        loading: false,
         error: false
     }
     marvelService = new MarvelService();
@@ -36,7 +34,6 @@ class CharList extends Component {
         })
     }
     renderItems(arr) {
-        console.log(arr);
         const items = arr.map((item) => {
             let imgStyle = { 'objectFit': 'cover' };
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
