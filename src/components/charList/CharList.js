@@ -4,7 +4,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelServices';
 
 import './charList.scss';
-//import { render } from '@testing-library/react';
+
 
 
 class CharList extends Component {
@@ -16,6 +16,7 @@ class CharList extends Component {
     marvelService = new MarvelService();
 
     componentDidMount() {
+        this.onCharLoading();
         this.marvelService.getAllCharacters()
             .then(this.onCharListLoaded)
             .catch(this.Error)
@@ -27,6 +28,12 @@ class CharList extends Component {
             loading: false
         })
     }
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    }
+
     onError = () => {
         this.setState({
             loading: false,
@@ -34,11 +41,12 @@ class CharList extends Component {
         })
     }
     renderItems(arr) {
-        const items = arr.map((item) => {
+        const items = arr.map((item, i) => {
             let imgStyle = { 'objectFit': 'cover' };
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 imgStyle = { 'objectFit': 'unset' };
             }
+            if (i > 8) return;
             return (
                 <li
                     className="char__item"
